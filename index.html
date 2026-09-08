@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nossos Chalés | Tour Virtual 360°</title>
+
+<meta
+name="description"
+content="Conheça nossos chalés através de uma experiência virtual imersiva."
+>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap"
+rel="stylesheet">
+
+<style>
+
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: #080807;
+    color: #fff;
+    font-family: "DM Sans", sans-serif;
+    overflow: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    min-height: 650px;
+    overflow: hidden;
+    background:
+        linear-gradient(
+            90deg,
+            rgba(4,4,3,.88) 0%,
+            rgba(4,4,3,.62) 28%,
+            rgba(4,4,3,.20) 58%,
+            rgba(4,4,3,.42) 100%
+        ),
+        linear-gradient(
+            0deg,
+            rgba(0,0,0,.88) 0%,
+            rgba(0,0,0,.05) 58%,
+            rgba(0,0,0,.30) 100%
+        ),
+        url("hero.png");
+
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.8s ease-in-out;
+}
+
+
+/* =========================================
+   TEXTURA SUTIL
+========================================= */
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 30%,
+            rgba(0,0,0,.18) 100%
+        );
+}
+
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 34px 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    animation: fadeDown 1s ease both;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.logo-mark {
+    width: 26px;
+    height: 22px;
+    position: relative;
+}
+
+.logo-mark::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-left: 1px solid #c9a45c;
+    border-top: 1px solid #c9a45c;
+    transform: rotate(45deg);
+    left: 4px;
+    top: 2px;
+}
+
+.logo-mark::after {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 1px;
+    background: #c9a45c;
+    left: 5px;
+    bottom: 2px;
+}
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: .9;
+}
+
+.menu {
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    cursor: pointer;
+}
+
+.menu span {
+    height: 1px;
+    width: 100%;
+    background: white;
+    transition: .3s ease;
+}
+
+.menu span:last-child {
+    width: 65%;
+    margin-left: auto;
+}
+
+
+/* =========================================
+   CONTEÚDO PRINCIPAL
+========================================= */
+
+.content {
+    position: absolute;
+    z-index: 5;
+    left: 7%;
+    top: 50%;
+    transform: translateY(-54%);
+    max-width: 700px;
+    animation: fadeUp 1.2s ease .2s both;
+}
+
+.overline {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 23px;
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #d4b16b;
+}
+
+.overline::after {
+    content: "";
+    width: 38px;
+    height: 1px;
+    background: #c9a45c;
+}
+
+.title-small {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(24px, 3vw, 40px);
+    font-weight: 400;
+    letter-spacing: 5px;
+    color: #d4b16b;
+    margin-bottom: 2px;
+}
+
+.title {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(50px, 7vw, 110px);
+    line-height: .9;
+    font-weight: 400;
+    letter-spacing: -2px;
+    margin-left: -7px;
+    transition: opacity 0.3s ease;
+}
+
+.gold-line {
+    width: 68px;
+    height: 1px;
+    background: #c9a45c;
+    margin-top: 36px;
+    margin-bottom: 25px;
+}
+
+.subtitle {
+    font-family: "Playfair Display", serif;
+    font-size: clamp(16px, 1.4vw, 20px);
+    font-weight: 400;
+    color: rgba(255,255,255,.88);
+    letter-spacing: .4px;
+    transition: opacity 0.3s ease;
+}
+
+.subtitle em {
+    font-style: italic;
+    color: #d6bd91;
+}
+
+
+/* =========================================
+   BOTÃO EXPLORAR 360
+========================================= */
+
+.explore {
+    display: inline-block;
+    margin-top: 38px;
+    padding: 18px 36px;
+    border: 1px solid rgba(201,164,92,0.5);
+    background: transparent;
+    color: #ffffff;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
+}
+
+.explore::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #c9a45c;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+
+.explore:hover {
+    color: #080807;
+    border-color: #c9a45c;
+    transform: translateY(-3px);
+}
+
+.explore:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+/* =========================================
+   CARDS DOS CHALÉS
+========================================= */
+
+.chalets {
+    position: absolute;
+    z-index: 7;
+    right: 5%;
+    bottom: 58px;
+    width: min(650px, 48%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.card {
+    position: relative;
+    min-height: 130px;
+    padding: 17px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.22);
+    background: rgba(8,8,7,.28);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: transform .45s ease, border-color .45s ease, background .45s ease;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-size: cover;
+    background-position: center;
+    opacity: .28;
+    transform: scale(1.08);
+    transition: transform .7s ease, opacity .5s ease;
+}
+
+.card-sunset::before { background-image: url("hero.png"); }
+.card-piramide::before { background-image: url("hero-piramide.png"); }
+.card-santorini::before { background-image: url("hero-santorini.JPEG"); }
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.80));
+}
+
+.card:hover, .card.active {
+    transform: translateY(-7px);
+    border-color: rgba(201,164,92,.8);
+    background: rgba(8,8,7,.12);
+}
+
+.card:hover::before, .card.active::before {
+    transform: scale(1);
+    opacity: .55;
+}
+
+.card-number {
+    font-family: "Playfair Display", serif;
+    font-size: 25px;
+    color: #d4b16b;
+    font-weight: 400;
+}
+
+.card-name {
+    position: absolute;
+    bottom: 18px;
+    left: 17px;
+    font-family: "Playfair Display", serif;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+
+/* =========================================
+   INDICADOR LATERAL & RODAPÉ
+========================================= */
+
+.side-scroll {
+    position: absolute;
+    right: 31px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    font-size: 8px;
+    letter-spacing: 4px;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+    opacity: .5;
+}
+
+.side-line {
+    height: 55px;
+    width: 1px;
+    background: rgba(255,255,255,.65);
+}
+
+.bottom-label {
+    position: absolute;
+    left: 7%;
+    bottom: 35px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 8px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: .55;
+}
+
+.bottom-label::before,
+.bottom-label::after {
+    content: "";
+    width: 45px;
+    height: 1px;
+    background: rgba(255,255,255,.4);
+}
+
+
+/* =========================================
+   ANIMAÇÕES
+========================================= */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(-45%); }
+    to { opacity: 1; transform: translateY(-54%); }
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* =========================================
+   RESPONSIVO
+========================================= */
+@media (max-width: 1000px) {
+    .topbar { padding: 27px 30px; }
+    .content { left: 6%; }
+    .chalets { right: 5%; width: 52%; }
+    .side-scroll { display: none; }
+}
+
+@media (max-width: 700px) {
+    body { overflow: auto; }
+    .hero { min-height: 850px; height: 100svh; background-size: cover; }
+    .topbar { padding: 23px 20px; }
+    .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
+    .title-small { font-size: 26px; }
+    .title { font-size: 50px; }
+    .chalets { left: 20px; right: 20px; bottom: 20px; width: auto; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .card { min-height: 105px; padding: 12px; }
+    .card-name { left: 12px; bottom: 13px; font-size: 10px; }
+    .bottom-label { display: none; }
+}
+</style>
+
+</head>
+
+<body>
+
+<main class="hero" id="heroBackground">
+
+    <!-- TOPO -->
+    <header class="topbar">
+        <a href="#" class="logo">
+            <span class="logo-mark"></span>
+            <span id="logoText">Chalé Sunset</span>
+        </a>
+        <div class="top-right">
+            <span>Tour Virtual 360°</span>
+            <div class="menu">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <section class="content">
+        <div class="overline">EXPERIÊNCIA</div>
+        <div class="title-small" id="chaletPreTitle">CHALÉ</div>
+        <h1 class="title" id="chaletTitle">Sunset</h1>
+        <div class="gold-line"></div>
+        <p class="subtitle" id="chaletSubtitle">
+            Uma experiência para <em>desacelerar.</em>
+        </p>
+        <a href="https://nexths.github.io/chale-sunset/" class="explore" id="exploreBtn" target="_blank">
+            <span>Explorar 360°</span>
+        </a>
+    </section>
+
+    <!-- CARDS DOS CHALÉS -->
+    <section class="chalets" id="chales">
+
+        <!-- CARD 01: SUNSET -->
+        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.png" data-link="https://nexths.github.io/chale-sunset/">
+            <span class="card-number">01</span>
+            <span class="card-name">Chalé Sunset</span>
+        </div>
+
+        <!-- CARD 02: PIRÂMIDE -->
+        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.png" data-link="https://nexths.github.io/piramidevidro/">
+            <span class="card-number">02</span>
+            <span class="card-name">Chalé Pirâmide de Vidro</span>
+        </div>
+
+        <!-- CARD 03: SANTORINI -->
+        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.JPEG" data-link="https://nexths.github.io/cupulesantorini/">
+            <span class="card-number">03</span>
+            <span class="card-name">Chalé Cúpula Santorini</span>
+        </div>
+
+    </section>
+
+    <!-- INDICADOR LATERAL -->
+    <div class="side-scroll">
+        <span class="side-line"></span>
+        Explore
+    </div>
+
+    <!-- RODAPÉ -->
+    <div class="bottom-label">
+        Escolha seu chalé e viva essa experiência
+    </div>
+
+</main>
+
+<!-- SCRIPT DE SLIDE AUTOMÁTICO E INTERATIVO -->
+<script>
+const chaletsData = [
+    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.png", link: "https://nexths.github.io/chale-sunset/" },
+    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.png", link: "https://nexths.github.io/piramidevidro/" },
+    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.JPEG", link: "https://nexths.github.io/cupulesantorini/" }
+];
+
+let currentIndex = 0;
+let slideInterval;
+
+function mudarConteudo(index) {
+    const cards = document.querySelectorAll('.card');
+    const hero = document.getElementById('heroBackground');
+    const logoText = document.getElementById('logoText');
+    const preTitle = document.getElementById('chaletPreTitle');
+    const title = document.getElementById('chaletTitle');
+    const subtitle = document.getElementById('chaletSubtitle');
+    const exploreBtn = document.getElementById('exploreBtn');
+
+    // Atualiza classes ativas dos cards
+    cards.forEach(c => c.classList.remove('active'));
+    cards[index].classList.add('active');
+
+    const data = chaletsData[index];
+
+    // Transição suave de fade no texto
+    title.style.opacity = 0;
+    subtitle.style.opacity = 0;
+
+    setTimeout(() => {
+        hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
+        logoText.textContent = data.name;
+        preTitle.textContent = data.pre;
+        title.textContent = data.name;
+        subtitle.innerHTML = data.sub;
+        exploreBtn.setAttribute('href', data.link);
+
+        title.style.opacity = 1;
+        subtitle.style.opacity = 1;
+    }, 250);
+}
+
+// Função ao clicar manualmente em um card
+function selecionarChale(index) {
+    currentIndex = index;
+    mudarConteudo(currentIndex);
+
+    // Reinicia o temporizador automático
+    clearInterval(slideInterval);
+    iniciarSlideAutomatico();
+}
+
+// Inicia o carrossel automático (troca a cada 5 segundos)
+function iniciarSlideAutomatico() {
+    slideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % chaletsData.length;
+        mudarConteudo(currentIndex);
+    }, 5000);
+}
+
+// Dispara o autoplay ao carregar a página
+iniciarSlideAutomatico();
+</script>
+
+</body>
+</html>
