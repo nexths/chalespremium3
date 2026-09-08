@@ -79,7 +79,22 @@ a {
 
     background-size: cover;
     background-position: center;
-    transition: background-image 0.8s ease-in-out, background-position 0.8s ease-in-out;
+}
+
+/* Animação para a foto entrar correndo da direita para a esquerda */
+@keyframes slideFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0.5;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.slide-anim {
+    animation: slideFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 
@@ -236,7 +251,6 @@ a {
     font-weight: 400;
     letter-spacing: -2px;
     margin-left: -7px;
-    transition: opacity 0.3s ease;
 }
 
 .gold-line {
@@ -253,7 +267,6 @@ a {
     font-weight: 400;
     color: rgba(255,255,255,.88);
     letter-spacing: .4px;
-    transition: opacity 0.3s ease;
 }
 
 .subtitle em {
@@ -341,7 +354,6 @@ a {
     background-position: center;
     opacity: .28;
     transform: scale(1.08);
-    transition: transform .7s ease, opacity .5s ease;
 }
 
 .card-sunset::before { background-image: url("hero.webp"); }
@@ -360,11 +372,6 @@ a {
     transform: translateY(-7px);
     border-color: rgba(201,164,92,.8);
     background: rgba(8,8,7,.12);
-}
-
-.card:hover::before, .card.active::before {
-    transform: scale(1);
-    opacity: .55;
 }
 
 .card-number {
@@ -465,7 +472,7 @@ a {
 
 
 /* =========================================
-   ANIMAÇÕES
+   ANIMAÇÕES DE ENTRADA
 ========================================= */
 
 @keyframes fadeUp {
@@ -480,7 +487,7 @@ a {
 
 
 /* =========================================
-   RESPONSIVO (CELULAR)
+   RESPONSIVO
 ========================================= */
 @media (max-width: 1000px) {
     .topbar { padding: 27px 30px; }
@@ -491,19 +498,11 @@ a {
 
 @media (max-width: 700px) {
     body { overflow: hidden; }
-    
-    /* ZOOM OUT NO CELULAR: Usamos 'background-size: contain' ou 'cover' com ajuste */
-    .hero {
-        min-height: 850px;
-        height: 100svh;
-        background-size: cover; 
-    }
-    
+    .hero { min-height: 850px; height: 100svh; background-size: cover; }
     .topbar { padding: 23px 20px; }
     .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
     .title-small { font-size: 26px; }
     .title { font-size: 46px; }
-    
     .chalets { display: none; }
     .mobile-dots { display: flex; }
     .bottom-label { display: none; }
@@ -555,7 +554,7 @@ a {
             <span class="card-number">02</span>
             <span class="card-name">Chalé Pirâmide de Vidro</span>
         </div>
-        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-pos="center center" data-link="https://nexths.github.io/cupulesantorini/">
+        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-pos="20% center" data-link="https://nexths.github.io/cupulesantorini/">
             <span class="card-number">03</span>
             <span class="card-name">Chalé Cúpula Santorini</span>
         </div>
@@ -581,18 +580,19 @@ a {
 
 </main>
 
-<!-- SCRIPT COM CONTROLE DE POSIÇÃO (JOGAR PIRÂMIDE PARA A DIREITA) -->
+<!-- SCRIPT DE DESLIZE UNIDIRECIONAL E ARRASTE LIVRE -->
 <script>
 const chaletsData = [
     { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", pos: "center center", link: "https://nexths.github.io/chale-sunset/" },
-    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", pos: "80% center", link: "https://nexths.github.io/piramidevidro/" }, // 80% joga a foto mais para a direita
-    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", pos: "center center", link: "https://nexths.github.io/cupulesantorini/" }
+    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", pos: "80% center", link: "https://nexths.github.io/piramidevidro/" },
+    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", pos: "20% center", link: "https://nexths.github.io/cupulesantorini/" }
 ];
 
 let currentIndex = 0;
 let slideInterval;
 
 function mudarConteudo(index) {
+    currentIndex = index;
     const cards = document.querySelectorAll('.card');
     const dots = document.querySelectorAll('.dot');
     const hero = document.getElementById('heroBackground');
@@ -610,27 +610,23 @@ function mudarConteudo(index) {
 
     const data = chaletsData[index];
 
-    title.style.opacity = 0;
-    subtitle.style.opacity = 0;
+    // Reaplica a classe de animação para forçar o slide correndo da direita para a esquerda
+    hero.classList.remove('slide-anim');
+    void hero.offsetWidth; // Reseta o gatilho da animação
+    hero.classList.add('slide-anim');
 
-    setTimeout(() => {
-        hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
-        hero.style.backgroundPosition = data.pos; // Aplica o deslocamento de 30% para a direita na pirâmide
-        
-        logoText.textContent = data.name;
-        preTitle.textContent = data.pre;
-        title.textContent = data.name;
-        subtitle.innerHTML = data.sub;
-        exploreBtn.setAttribute('href', data.link);
-
-        title.style.opacity = 1;
-        subtitle.style.opacity = 1;
-    }, 250);
+    hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
+    hero.style.backgroundPosition = data.pos;
+    
+    logoText.textContent = data.name;
+    preTitle.textContent = data.pre;
+    title.textContent = data.name;
+    subtitle.innerHTML = data.sub;
+    exploreBtn.setAttribute('href', data.link);
 }
 
 function selecionarChale(index) {
-    currentIndex = index;
-    mudarConteudo(currentIndex);
+    mudarConteudo(index);
     clearInterval(slideInterval);
     iniciarSlideAutomatico();
 }
@@ -644,7 +640,7 @@ function iniciarSlideAutomatico() {
 
 iniciarSlideAutomatico();
 
-// SUPORTE A GESTO DE DESLIZAR (SWIPE) NO CELULAR
+// SUPORTE AO TOQUE LIVRE (O usuário joga o dedo para o lado que quiser)
 let touchStartX = 0;
 let touchEndX = 0;
 const heroElement = document.getElementById('heroBackground');
@@ -661,10 +657,11 @@ heroElement.addEventListener('touchend', e => {
 function tratarSwipe() {
     const limiteSwipe = 50;
     if (touchEndX < touchStartX - limiteSwipe) {
+        // Jogou o dedo para a esquerda -> Avança o chalé
         currentIndex = (currentIndex + 1) % chaletsData.length;
         selecionarChale(currentIndex);
-    }
-    if (touchEndX > touchStartX + limiteSwipe) {
+    } else if (touchEndX > touchStartX + limiteSwipe) {
+        // Jogou o dedo para a direita -> Volta o chalé
         currentIndex = (currentIndex - 1 + chaletsData.length) % chaletsData.length;
         selecionarChale(currentIndex);
     }
