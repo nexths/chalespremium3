@@ -79,7 +79,7 @@ a {
 
     background-size: cover;
     background-position: center;
-    transition: background-image 0.8s ease-in-out;
+    transition: background-image 0.8s ease-in-out, background-position 0.8s ease-in-out;
 }
 
 
@@ -305,7 +305,7 @@ a {
 
 
 /* =========================================
-   CARDS DOS CHALÉS
+   CARDS DOS CHALÉS (DESKTOP)
 ========================================= */
 
 .chalets {
@@ -385,6 +385,36 @@ a {
 
 
 /* =========================================
+   INDICADORES MOBILE (BARRINHAS / DOTS)
+========================================= */
+
+.mobile-dots {
+    display: none;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 7;
+    gap: 8px;
+    align-items: center;
+}
+
+.dot {
+    width: 25px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background 0.4s ease, width 0.4s ease;
+}
+
+.dot.active {
+    background: #c9a45c;
+    width: 45px;
+}
+
+
+/* =========================================
    INDICADOR LATERAL & RODAPÉ
 ========================================= */
 
@@ -450,7 +480,7 @@ a {
 
 
 /* =========================================
-   RESPONSIVO
+   RESPONSIVO (CELULAR)
 ========================================= */
 @media (max-width: 1000px) {
     .topbar { padding: 27px 30px; }
@@ -460,15 +490,22 @@ a {
 }
 
 @media (max-width: 700px) {
-    body { overflow: auto; }
-    .hero { min-height: 850px; height: 100svh; background-size: cover; }
+    body { overflow: hidden; }
+    
+    /* ZOOM OUT NO CELULAR: Usamos 'background-size: contain' ou 'cover' com ajuste */
+    .hero {
+        min-height: 850px;
+        height: 100svh;
+        background-size: cover; 
+    }
+    
     .topbar { padding: 23px 20px; }
     .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
     .title-small { font-size: 26px; }
-    .title { font-size: 50px; }
-    .chalets { left: 20px; right: 20px; bottom: 20px; width: auto; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-    .card { min-height: 105px; padding: 12px; }
-    .card-name { left: 12px; bottom: 13px; font-size: 10px; }
+    .title { font-size: 46px; }
+    
+    .chalets { display: none; }
+    .mobile-dots { display: flex; }
     .bottom-label { display: none; }
 }
 </style>
@@ -508,28 +545,28 @@ a {
         </a>
     </section>
 
-    <!-- CARDS DOS CHALÉS -->
+    <!-- CARDS DOS CHALÉS (DESKTOP) -->
     <section class="chalets" id="chales">
-
-        <!-- CARD 01: SUNSET -->
-        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-link="https://nexths.github.io/chale-sunset/">
+        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-pos="center center" data-link="https://nexths.github.io/chale-sunset/">
             <span class="card-number">01</span>
             <span class="card-name">Chalé Sunset</span>
         </div>
-
-        <!-- CARD 02: PIRÂMIDE -->
-        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.webp" data-link="https://nexths.github.io/piramidevidro/">
+        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.webp" data-pos="80% center" data-link="https://nexths.github.io/piramidevidro/">
             <span class="card-number">02</span>
             <span class="card-name">Chalé Pirâmide de Vidro</span>
         </div>
-
-        <!-- CARD 03: SANTORINI -->
-        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-link="https://nexths.github.io/cupulesantorini/">
+        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-pos="center center" data-link="https://nexths.github.io/cupulesantorini/">
             <span class="card-number">03</span>
             <span class="card-name">Chalé Cúpula Santorini</span>
         </div>
-
     </section>
+
+    <!-- BARRINHAS DE NAVEGAÇÃO MOBILE -->
+    <div class="mobile-dots" id="mobileDots">
+        <span class="dot active" onclick="selecionarChale(0)"></span>
+        <span class="dot" onclick="selecionarChale(1)"></span>
+        <span class="dot" onclick="selecionarChale(2)"></span>
+    </div>
 
     <!-- INDICADOR LATERAL -->
     <div class="side-scroll">
@@ -544,12 +581,12 @@ a {
 
 </main>
 
-<!-- SCRIPT DE SLIDE AUTOMÁTICO E INTERATIVO -->
+<!-- SCRIPT COM CONTROLE DE POSIÇÃO (JOGAR PIRÂMIDE PARA A DIREITA) -->
 <script>
 const chaletsData = [
-    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", link: "https://nexths.github.io/chale-sunset/" },
-    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", link: "https://nexths.github.io/piramidevidro/" },
-    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", link: "https://nexths.github.io/cupulesantorini/" }
+    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", pos: "center center", link: "https://nexths.github.io/chale-sunset/" },
+    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", pos: "80% center", link: "https://nexths.github.io/piramidevidro/" }, // 80% joga a foto mais para a direita
+    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", pos: "center center", link: "https://nexths.github.io/cupulesantorini/" }
 ];
 
 let currentIndex = 0;
@@ -557,6 +594,7 @@ let slideInterval;
 
 function mudarConteudo(index) {
     const cards = document.querySelectorAll('.card');
+    const dots = document.querySelectorAll('.dot');
     const hero = document.getElementById('heroBackground');
     const logoText = document.getElementById('logoText');
     const preTitle = document.getElementById('chaletPreTitle');
@@ -564,18 +602,21 @@ function mudarConteudo(index) {
     const subtitle = document.getElementById('chaletSubtitle');
     const exploreBtn = document.getElementById('exploreBtn');
 
-    // Atualiza classes ativas dos cards
     cards.forEach(c => c.classList.remove('active'));
-    cards[index].classList.add('active');
+    if(cards[index]) cards[index].classList.add('active');
+
+    dots.forEach(d => d.classList.remove('active'));
+    if(dots[index]) dots[index].classList.add('active');
 
     const data = chaletsData[index];
 
-    // Transição suave de fade no texto
     title.style.opacity = 0;
     subtitle.style.opacity = 0;
 
     setTimeout(() => {
         hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
+        hero.style.backgroundPosition = data.pos; // Aplica o deslocamento de 30% para a direita na pirâmide
+        
         logoText.textContent = data.name;
         preTitle.textContent = data.pre;
         title.textContent = data.name;
@@ -587,26 +628,47 @@ function mudarConteudo(index) {
     }, 250);
 }
 
-// Função ao clicar manualmente em um card
 function selecionarChale(index) {
     currentIndex = index;
     mudarConteudo(currentIndex);
-
-    // Reinicia o temporizador automático
     clearInterval(slideInterval);
     iniciarSlideAutomatico();
 }
 
-// Inicia o carrossel automático (troca a cada 5 segundos)
 function iniciarSlideAutomatico() {
     slideInterval = setInterval(() => {
         currentIndex = (currentIndex + 1) % chaletsData.length;
         mudarConteudo(currentIndex);
-    }, 5000);
+    }, 8000);
 }
 
-// Dispara o autoplay ao carregar a página
 iniciarSlideAutomatico();
+
+// SUPORTE A GESTO DE DESLIZAR (SWIPE) NO CELULAR
+let touchStartX = 0;
+let touchEndX = 0;
+const heroElement = document.getElementById('heroBackground');
+
+heroElement.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+heroElement.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    tratarSwipe();
+});
+
+function tratarSwipe() {
+    const limiteSwipe = 50;
+    if (touchEndX < touchStartX - limiteSwipe) {
+        currentIndex = (currentIndex + 1) % chaletsData.length;
+        selecionarChale(currentIndex);
+    }
+    if (touchEndX > touchStartX + limiteSwipe) {
+        currentIndex = (currentIndex - 1 + chaletsData.length) % chaletsData.length;
+        selecionarChale(currentIndex);
+    }
+}
 </script>
 
 </body>
