@@ -75,7 +75,7 @@ a {
             rgba(0,0,0,.05) 58%,
             rgba(0,0,0,.30) 100%
         ),
-        url("hero.png");
+        url("hero.webp");
 
     background-size: cover;
     background-position: center;
@@ -344,9 +344,9 @@ a {
     transition: transform .7s ease, opacity .5s ease;
 }
 
-.card-sunset::before { background-image: url("hero.png"); }
-.card-piramide::before { background-image: url("hero-piramide.png"); }
-.card-santorini::before { background-image: url("hero-santorini.JPEG"); }
+.card-sunset::before { background-image: url("hero.webp"); }
+.card-piramide::before { background-image: url("hero-piramide.webp"); }
+.card-santorini::before { background-image: url("hero-santorini.webp"); }
 
 .card::after {
     content: "";
@@ -512,19 +512,19 @@ a {
     <section class="chalets" id="chales">
 
         <!-- CARD 01: SUNSET -->
-        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.png" data-link="https://nexths.github.io/chale-sunset/">
+        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-link="https://nexths.github.io/chale-sunset/">
             <span class="card-number">01</span>
             <span class="card-name">Chalé Sunset</span>
         </div>
 
         <!-- CARD 02: PIRÂMIDE -->
-        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.png" data-link="https://nexths.github.io/piramidevidro/">
+        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.webp" data-link="https://nexths.github.io/piramidevidro/">
             <span class="card-number">02</span>
             <span class="card-name">Chalé Pirâmide de Vidro</span>
         </div>
 
         <!-- CARD 03: SANTORINI -->
-        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.JPEG" data-link="https://nexths.github.io/cupulesantorini/">
+        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-link="https://nexths.github.io/cupulesantorini/">
             <span class="card-number">03</span>
             <span class="card-name">Chalé Cúpula Santorini</span>
         </div>
@@ -547,9 +547,9 @@ a {
 <!-- SCRIPT DE SLIDE AUTOMÁTICO E INTERATIVO -->
 <script>
 const chaletsData = [
-    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.png", link: "https://nexths.github.io/chale-sunset/" },
-    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.png", link: "https://nexths.github.io/piramidevidro/" },
-    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.JPEG", link: "https://nexths.github.io/cupulesantorini/" }
+    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", link: "https://nexths.github.io/chale-sunset/" },
+    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", link: "https://nexths.github.io/piramidevidro/" },
+    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", link: "https://nexths.github.io/cupulesantorini/" }
 ];
 
 let currentIndex = 0;
