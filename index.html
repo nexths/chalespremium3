@@ -4,7 +4,8 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Trava o zoom e o pinçamento por toque no celular -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <title>Chalés Premium | Santa Isabel - Tour Virtual 360°</title>
 
@@ -23,7 +24,7 @@ rel="stylesheet">
 <style>
 
 /* =========================================
-   RESET E ESTRUTURA FIXA
+   RESET E ESTRUTURA FIXA (COM BLOQUEIO DE ZOOM)
 ========================================= */
 
 * {
@@ -36,13 +37,16 @@ html,
 body {
     width: 100%;
     height: 100%;
+    /* Desativa gestos de pinça, zoom e rolagem livre do navegador */
+    touch-action: pan-y;
+    overflow: hidden;
+    position: fixed;
 }
 
 body {
     background: #080807;
     color: #fff;
     font-family: "DM Sans", sans-serif;
-    overflow: hidden;
 }
 
 a {
@@ -52,14 +56,14 @@ a {
 
 
 /* =========================================
-   CAMADA DA HERO (ESTABILIZADA E FIXA)
+   CAMADA DA HERO (TRAVADA E CENTRALIZADA)
 ========================================= */
 
 .hero {
     position: relative;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     height: 100svh;
-    min-height: 650px;
     overflow: hidden;
     background:
         linear-gradient(
@@ -78,8 +82,10 @@ a {
         url("hero.webp");
 
     background-size: cover;
+    /* Mantém a foto cravada no centro exato da tela */
     background-position: center center;
     background-repeat: no-repeat;
+    transform: translateZ(0); /* Força aceleração de hardware para estabilidade */
 }
 
 /* Animação limpa apenas para a entrada da foto */
@@ -531,8 +537,7 @@ a {
 }
 
 @media (max-width: 700px) {
-    body { overflow: hidden; }
-    .hero { min-height: 850px; height: 100svh; background-size: cover; }
+    .hero { min-height: 100svh; height: 100svh; background-size: cover; }
     .topbar { padding: 23px 20px; }
     .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
     .chalets { display: none; }
@@ -643,7 +648,7 @@ function mudarConteudo(index) {
 
     const data = chaletsData[index];
 
-    // Fundo corre da direita para a esquerda de forma perfeitamente alinhada
+    // Fundo corre da direita para a esquerda de forma perfeitamente travada no centro
     hero.classList.remove('slide-bg');
     void hero.offsetWidth; 
     hero.classList.add('slide-bg');
@@ -653,7 +658,7 @@ function mudarConteudo(index) {
     void contentBox.offsetWidth;
     contentBox.classList.add('animate-text');
 
-    // Altera as informações textuais e de imagem
+    // Altera as informações textuais e de imagem mantendo o alinhamento
     hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
     hero.style.backgroundPosition = data.pos;
     
@@ -678,22 +683,22 @@ function iniciarSlideAutomatico() {
 
 iniciarSlideAutomatico();
 
-// SUPORTE AO TOQUE LIVRE (ESTABILIZADO)
+// SUPORTE AO TOQUE RIGIDAMENTE TRAVADO AO CENTRO
 let touchStartX = 0;
 let touchEndX = 0;
 const heroElement = document.getElementById('heroBackground');
 
 heroElement.addEventListener('touchstart', e => {
     touchStartX = e.changedTouches[0].screenX;
-});
+}, {passive: true});
 
 heroElement.addEventListener('touchend', e => {
     touchEndX = e.changedTouches[0].screenX;
     tratarSwipe();
-});
+}, {passive: true});
 
 function tratarSwipe() {
-    const limiteSwipe = 50;
+    const limiteSwipe = 40; // Sensibilidade ideal para toque no celular
     if (touchEndX < touchStartX - limiteSwipe) {
         currentIndex = (currentIndex + 1) % chaletsData.length;
         selecionarChale(currentIndex);
