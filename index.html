@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nossos Chalés | Tour Virtual 360°</title>
+<title>Chalés Premium | Santa Isabel - Tour Virtual 360°</title>
 
 <meta
 name="description"
-content="Conheça nossos chalés através de uma experiência virtual imersiva."
+content="Conheça nossos chalés exclusivos em Santa Isabel através de uma experiência virtual imersiva."
 >
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@ rel="stylesheet">
 <style>
 
 /* =========================================
-   RESET
+   RESET E ESTRUTURA FIXA
 ========================================= */
 
 * {
@@ -52,7 +52,7 @@ a {
 
 
 /* =========================================
-   HERO
+   CAMADA DA HERO (APENAS O FUNDO CORRE)
 ========================================= */
 
 .hero {
@@ -81,20 +81,18 @@ a {
     background-position: center;
 }
 
-/* Animação para a foto entrar correndo da direita para a esquerda */
+/* Animação para a foto correr da direita para a esquerda */
 @keyframes slideFromRight {
     from {
         transform: translateX(100%);
-        opacity: 0.5;
     }
     to {
         transform: translateX(0);
-        opacity: 1;
     }
 }
 
-.slide-anim {
-    animation: slideFromRight 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.slide-bg {
+    animation: slideFromRight 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 
@@ -118,7 +116,7 @@ a {
 
 
 /* =========================================
-   TOPBAR
+   TOPBAR (FIXA)
 ========================================= */
 
 .topbar {
@@ -131,7 +129,6 @@ a {
     justify-content: space-between;
     align-items: center;
     z-index: 10;
-    animation: fadeDown 1s ease both;
 }
 
 .logo {
@@ -204,7 +201,7 @@ a {
 
 
 /* =========================================
-   CONTEÚDO PRINCIPAL
+   CONTEÚDO PRINCIPAL (TEXTOS EM CASCATA)
 ========================================= */
 
 .content {
@@ -214,8 +211,45 @@ a {
     top: 50%;
     transform: translateY(-54%);
     max-width: 700px;
-    animation: fadeUp 1.2s ease .2s both;
 }
+
+@keyframes textReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-text .overline {
+    animation: textReveal 0.8s ease 0.3s both;
+}
+
+.animate-text .title-small {
+    animation: textReveal 0.8s ease 0.45s both;
+}
+
+.animate-text .title {
+    animation: textReveal 0.8s ease 0.6s both;
+}
+
+.animate-text .gold-line {
+    animation: textReveal 0.8s ease 0.75s both;
+}
+
+.animate-text .subtitle {
+    animation: textReveal 0.8s ease 0.9s both;
+}
+
+.animate-text .explore {
+    animation: textReveal 0.8s ease 1.05s both;
+}
+
+
+/* ESTILOS DOS TEXTOS */
 
 .overline {
     display: flex;
@@ -246,7 +280,7 @@ a {
 
 .title {
     font-family: "Playfair Display", serif;
-    font-size: clamp(50px, 7vw, 110px);
+    font-size: clamp(45px, 6vw, 95px);
     line-height: .9;
     font-weight: 400;
     letter-spacing: -2px;
@@ -318,7 +352,7 @@ a {
 
 
 /* =========================================
-   CARDS DOS CHALÉS (DESKTOP)
+   CARDS DOS CHALÉS (FIXOS NA BASE, COM ENTRADA EM ONDA)
 ========================================= */
 
 .chalets {
@@ -330,6 +364,30 @@ a {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+}
+
+@keyframes cardInitialReveal {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Cada card sobe em um tempinho diferente apenas na abertura */
+.card-1 {
+    animation: cardInitialReveal 0.8s ease 1.1s both;
+}
+
+.card-2 {
+    animation: cardInitialReveal 0.8s ease 1.25s both;
+}
+
+.card-3 {
+    animation: cardInitialReveal 0.8s ease 1.4s both;
 }
 
 .card {
@@ -392,7 +450,7 @@ a {
 
 
 /* =========================================
-   INDICADORES MOBILE (BARRINHAS / DOTS)
+   INDICADORES MOBILE (FIXOS)
 ========================================= */
 
 .mobile-dots {
@@ -422,7 +480,7 @@ a {
 
 
 /* =========================================
-   INDICADOR LATERAL & RODAPÉ
+   INDICADOR LATERAL & RODAPÉ (FIXOS)
 ========================================= */
 
 .side-scroll {
@@ -472,21 +530,6 @@ a {
 
 
 /* =========================================
-   ANIMAÇÕES DE ENTRADA
-========================================= */
-
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(-45%); }
-    to { opacity: 1; transform: translateY(-54%); }
-}
-
-@keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-15px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-
-/* =========================================
    RESPONSIVO
 ========================================= */
 @media (max-width: 1000px) {
@@ -502,7 +545,7 @@ a {
     .topbar { padding: 23px 20px; }
     .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
     .title-small { font-size: 26px; }
-    .title { font-size: 46px; }
+    .title { font-size: 42px; }
     .chalets { display: none; }
     .mobile-dots { display: flex; }
     .bottom-label { display: none; }
@@ -513,13 +556,13 @@ a {
 
 <body>
 
-<main class="hero" id="heroBackground">
+<main class="hero animate-text" id="heroBackground">
 
-    <!-- TOPO -->
+    <!-- TOPO FIXO -->
     <header class="topbar">
         <a href="#" class="logo">
             <span class="logo-mark"></span>
-            <span id="logoText">Chalé Sunset</span>
+            <span>Chalés • Santa Isabel</span>
         </a>
         <div class="top-right">
             <span>Tour Virtual 360°</span>
@@ -530,9 +573,9 @@ a {
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <section class="content">
-        <div class="overline">EXPERIÊNCIA</div>
+    <!-- CONTEÚDO PRINCIPAL COM ANIMAÇÃO EM CASCATA -->
+    <section class="content animate-text" id="contentBox">
+        <div class="overline">EXPERIÊNCIA EXCLUSIVA</div>
         <div class="title-small" id="chaletPreTitle">CHALÉ</div>
         <h1 class="title" id="chaletTitle">Sunset</h1>
         <div class="gold-line"></div>
@@ -544,19 +587,19 @@ a {
         </a>
     </section>
 
-    <!-- CARDS DOS CHALÉS (DESKTOP) -->
+    <!-- CARDS DOS CHALÉS (COM CLASSES CARD-1, CARD-2 E CARD-3 PARA SUBIR EM ONDA NA ABERTURA) -->
     <section class="chalets" id="chales">
-        <div class="card card-sunset active" onclick="selecionarChale(0)" data-name="Chalé Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-pos="center center" data-link="https://nexths.github.io/chale-sunset/">
+        <div class="card card-sunset card-1 active" onclick="selecionarChale(0)" data-name="Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-pos="center center" data-link="https://nexths.github.io/chale-sunset/">
             <span class="card-number">01</span>
             <span class="card-name">Chalé Sunset</span>
         </div>
-        <div class="card card-piramide" onclick="selecionarChale(1)" data-name="Chalé Pirâmide de Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.webp" data-pos="80% center" data-link="https://nexths.github.io/piramidevidro/">
+        <div class="card card-piramide card-2" onclick="selecionarChale(1)" data-name="Pirâmide Vidro" data-pre="CHALÉ" data-sub="Arquitetura única em harmonia com a <em>natureza.</em>" data-img="hero-piramide.webp" data-pos="80% center" data-link="https://nexths.github.io/piramidevidro/">
             <span class="card-number">02</span>
-            <span class="card-name">Chalé Pirâmide de Vidro</span>
+            <span class="card-name">Pirâmide Vidro</span>
         </div>
-        <div class="card card-santorini" onclick="selecionarChale(2)" data-name="Chalé Cúpula Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-pos="20% center" data-link="https://nexths.github.io/cupulesantorini/">
+        <div class="card card-santorini card-3" onclick="selecionarChale(2)" data-name="Cupule Santorini" data-pre="CHALÉ" data-sub="Um refúgio exclusivo com vista <em>panorâmica.</em>" data-img="hero-santorini.webp" data-pos="20% center" data-link="https://nexths.github.io/cupulesantorini/">
             <span class="card-number">03</span>
-            <span class="card-name">Chalé Cúpula Santorini</span>
+            <span class="card-name">Cupule Santorini</span>
         </div>
     </section>
 
@@ -580,12 +623,12 @@ a {
 
 </main>
 
-<!-- SCRIPT DE DESLIZE UNIDIRECIONAL E ARRASTE LIVRE -->
+<!-- SCRIPT -->
 <script>
 const chaletsData = [
-    { name: "Chalé Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", pos: "center center", link: "https://nexths.github.io/chale-sunset/" },
-    { name: "Chalé Pirâmide de Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", pos: "80% center", link: "https://nexths.github.io/piramidevidro/" },
-    { name: "Chalé Cúpula Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", pos: "20% center", link: "https://nexths.github.io/cupulesantorini/" }
+    { name: "Sunset", pre: "CHALÉ", sub: "Uma experiência para <em>desacelerar.</em>", img: "hero.webp", pos: "center center", link: "https://nexths.github.io/chale-sunset/" },
+    { name: "Pirâmide Vidro", pre: "CHALÉ", sub: "Arquitetura única em harmonia com a <em>natureza.</em>", img: "hero-piramide.webp", pos: "80% center", link: "https://nexths.github.io/piramidevidro/" },
+    { name: "Cupule Santorini", pre: "CHALÉ", sub: "Um refúgio exclusivo com vista <em>panorâmica.</em>", img: "hero-santorini.webp", pos: "20% center", link: "https://nexths.github.io/cupulesantorini/" }
 ];
 
 let currentIndex = 0;
@@ -596,7 +639,8 @@ function mudarConteudo(index) {
     const cards = document.querySelectorAll('.card');
     const dots = document.querySelectorAll('.dot');
     const hero = document.getElementById('heroBackground');
-    const logoText = document.getElementById('logoText');
+    const contentBox = document.getElementById('contentBox');
+    
     const preTitle = document.getElementById('chaletPreTitle');
     const title = document.getElementById('chaletTitle');
     const subtitle = document.getElementById('chaletSubtitle');
@@ -610,15 +654,20 @@ function mudarConteudo(index) {
 
     const data = chaletsData[index];
 
-    // Reaplica a classe de animação para forçar o slide correndo da direita para a esquerda
-    hero.classList.remove('slide-anim');
-    void hero.offsetWidth; // Reseta o gatilho da animação
-    hero.classList.add('slide-anim');
+    // Fundo corre da direita para a esquerda
+    hero.classList.remove('slide-bg');
+    void hero.offsetWidth; 
+    hero.classList.add('slide-bg');
 
+    // Textos se atualizam com animação
+    contentBox.classList.remove('animate-text');
+    void contentBox.offsetWidth;
+    contentBox.classList.add('animate-text');
+
+    // Altera as informações textuais e de imagem
     hero.style.backgroundImage = `linear-gradient(90deg, rgba(4,4,3,.88) 0%, rgba(4,4,3,.62) 28%, rgba(4,4,3,.20) 58%, rgba(4,4,3,.42) 100%), linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.05) 58%, rgba(0,0,0,.30) 100%), url("${data.img}")`;
     hero.style.backgroundPosition = data.pos;
     
-    logoText.textContent = data.name;
     preTitle.textContent = data.pre;
     title.textContent = data.name;
     subtitle.innerHTML = data.sub;
@@ -640,7 +689,7 @@ function iniciarSlideAutomatico() {
 
 iniciarSlideAutomatico();
 
-// SUPORTE AO TOQUE LIVRE (O usuário joga o dedo para o lado que quiser)
+// SUPORTE AO TOQUE LIVRE (SWIPE) NO CELULAR
 let touchStartX = 0;
 let touchEndX = 0;
 const heroElement = document.getElementById('heroBackground');
@@ -657,11 +706,9 @@ heroElement.addEventListener('touchend', e => {
 function tratarSwipe() {
     const limiteSwipe = 50;
     if (touchEndX < touchStartX - limiteSwipe) {
-        // Jogou o dedo para a esquerda -> Avança o chalé
         currentIndex = (currentIndex + 1) % chaletsData.length;
         selecionarChale(currentIndex);
     } else if (touchEndX > touchStartX + limiteSwipe) {
-        // Jogou o dedo para a direita -> Volta o chalé
         currentIndex = (currentIndex - 1 + chaletsData.length) % chaletsData.length;
         selecionarChale(currentIndex);
     }
