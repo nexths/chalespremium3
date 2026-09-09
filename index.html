@@ -52,7 +52,7 @@ a {
 
 
 /* =========================================
-   CAMADA DA HERO (APENAS O FUNDO CORRE)
+   CAMADA DA HERO (ESTABILIZADA E FIXA)
 ========================================= */
 
 .hero {
@@ -78,10 +78,11 @@ a {
         url("hero.webp");
 
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
-/* Animação para a foto correr da direita para a esquerda */
+/* Animação limpa apenas para a entrada da foto */
 @keyframes slideFromRight {
     from {
         transform: translateX(100%);
@@ -352,7 +353,7 @@ a {
 
 
 /* =========================================
-   CARDS DOS CHALÉS (FIXOS NA BASE, COM ENTRADA EM ONDA)
+   CARDS DOS CHALÉS (FIXOS NA BASE)
 ========================================= */
 
 .chalets {
@@ -377,18 +378,9 @@ a {
     }
 }
 
-/* Cada card sobe em um tempinho diferente apenas na abertura */
-.card-1 {
-    animation: cardInitialReveal 0.8s ease 1.1s both;
-}
-
-.card-2 {
-    animation: cardInitialReveal 0.8s ease 1.25s both;
-}
-
-.card-3 {
-    animation: cardInitialReveal 0.8s ease 1.4s both;
-}
+.card-1 { animation: cardInitialReveal 0.8s ease 1.1s both; }
+.card-2 { animation: cardInitialReveal 0.8s ease 1.25s both; }
+.card-3 { animation: cardInitialReveal 0.8s ease 1.4s both; }
 
 .card {
     position: relative;
@@ -535,7 +527,6 @@ a {
 @media (max-width: 1000px) {
     .topbar { padding: 27px 30px; }
     .content { left: 6%; }
-    .chalets { right: 5%; width: 52%; }
     .side-scroll { display: none; }
 }
 
@@ -544,8 +535,6 @@ a {
     .hero { min-height: 850px; height: 100svh; background-size: cover; }
     .topbar { padding: 23px 20px; }
     .content { left: 20px; right: 20px; top: 43%; transform: translateY(-50%); max-width: none; }
-    .title-small { font-size: 26px; }
-    .title { font-size: 42px; }
     .chalets { display: none; }
     .mobile-dots { display: flex; }
     .bottom-label { display: none; }
@@ -573,7 +562,7 @@ a {
         </div>
     </header>
 
-    <!-- CONTEÚDO PRINCIPAL COM ANIMAÇÃO EM CASCATA -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <section class="content animate-text" id="contentBox">
         <div class="overline">EXPERIÊNCIA EXCLUSIVA</div>
         <div class="title-small" id="chaletPreTitle">CHALÉ</div>
@@ -587,7 +576,7 @@ a {
         </a>
     </section>
 
-    <!-- CARDS DOS CHALÉS (COM CLASSES CARD-1, CARD-2 E CARD-3 PARA SUBIR EM ONDA NA ABERTURA) -->
+    <!-- CARDS DOS CHALÉS -->
     <section class="chalets" id="chales">
         <div class="card card-sunset card-1 active" onclick="selecionarChale(0)" data-name="Sunset" data-pre="CHALÉ" data-sub="Uma experiência para <em>desacelerar.</em>" data-img="hero.webp" data-pos="center center" data-link="https://nexths.github.io/chale-sunset/">
             <span class="card-number">01</span>
@@ -654,7 +643,7 @@ function mudarConteudo(index) {
 
     const data = chaletsData[index];
 
-    // Fundo corre da direita para a esquerda
+    // Fundo corre da direita para a esquerda de forma perfeitamente alinhada
     hero.classList.remove('slide-bg');
     void hero.offsetWidth; 
     hero.classList.add('slide-bg');
@@ -689,7 +678,7 @@ function iniciarSlideAutomatico() {
 
 iniciarSlideAutomatico();
 
-// SUPORTE AO TOQUE LIVRE (SWIPE) NO CELULAR
+// SUPORTE AO TOQUE LIVRE (ESTABILIZADO)
 let touchStartX = 0;
 let touchEndX = 0;
 const heroElement = document.getElementById('heroBackground');
